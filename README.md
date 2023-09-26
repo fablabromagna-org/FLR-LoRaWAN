@@ -1,2 +1,2 @@
-# FLR-LoraWan
-Repository di sperimentazione su LoraWAN, dall'implementazione dei device remoti al NetworkServer
+# FLR-LoRaWAN
+Repository di sperimentazione su LoRaWAN, dall'implementazione dei device remoti al NetworkServer
