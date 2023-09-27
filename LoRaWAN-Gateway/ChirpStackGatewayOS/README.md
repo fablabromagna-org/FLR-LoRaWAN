@@ -75,7 +75,6 @@ Per prima cosa impostare la password del gateway. Questa sarà la stessa usata a
     *   Timezone → Europe/Rome
 
 
-> Al momento non e' stato configurato l'accesso ssh… vediamo se serve in futuro
 
 ### Network
 
