@@ -1,6 +1,13 @@
 # LoRaWAN-Gateway - ChirpStark  Gateway OS
 
+![gateway](../hardware/lorawan_gateway.jpg)
+
 Istruzioni per la realizzazione di un Gateway LoRaWAN utilizzando il software __ChirpStark  Gateway OS__ e un __Raspberry Pi 3B__ con Hat __RAK5146__ (basato su __Semtech’s SX1303__).
+
+![gateway](../hardware/lorawan_gateway1.jpg)
+![gateway](../hardware/lorawan_gateway2.jpg)
+
+
 
 La documentazione del sw è disponibile all'indirizzo https://www.chirpstack.io/docs/chirpstack-gateway-os/index.html
 
@@ -92,7 +99,7 @@ Una volta configurato il gateway occorre andare sulla dashboard del __Network Se
 Se tutto va a buon fine, dopo poco il gateway notificherà lo stato online al server, riportando anche la posizione ottenuta dal modulo GPS del RAK.
 
 > A livello di debug dei pacchetti dei device direttamente sul gateway non ho ancora trovato documentazione. La funzionalità del gateway risulta quindi essere molto trasparente.
- 
+
 
 ## Note e approfondimenti
 
