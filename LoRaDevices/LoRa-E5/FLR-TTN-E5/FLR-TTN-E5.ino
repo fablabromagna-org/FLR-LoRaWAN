@@ -140,6 +140,7 @@ void initialize_LoRaModule()
         //at_send_check_response((char*)"ID: AppEui, 12:34", 1000, (char*)"AT+ID=AppEui,\"1234567890ABCDEF\"\r\n");
 
         // Secondo sensore fatto in TTN
+        // -------------------------------------------------------------------- attento, lo spazio non serve ----------\
         at_send_check_response((char*)"+KEY: APPKEY 3947", 1000, (char*)"AT+KEY=APPKEY,\"3947B8A55FBDE2B395C34E612B1BC45 A\"\r\n");
         at_send_check_response((char*)"ID: DevEui, 70:B3", 1000, (char*)"AT+ID=DevEui,\"70B3D57ED00616F6\"\r\n");
         at_send_check_response((char*)"ID: AppEui, 12:34", 1000, (char*)"AT+ID=AppEui,\"1234567890ABCDEF\"\r\n");
