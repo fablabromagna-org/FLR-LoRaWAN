@@ -135,12 +135,12 @@ void initialize_LoRaModule()
         at_send_check_response((char*)"+LW: VER,",  1000, (char*)"AT+LW=VER\r\n");
         
         // Primo sensore fatto in TTN
-        //at_send_check_response((char*)"+KEY: APPKEY ABE0", 1000, (char*)"AT+KEY=APPKEY,\"ABE041D8AE25BC63012B29A2E4867559\"\r\n");
+        //at_send_check_response((char*)"+KEY: APPKEY ABE0", 1000, (char*)"AT+KEY=APPKEY,\"ABE041D8AE25BC63012B29A2E486755 9\"\r\n");
         //at_send_check_response((char*)"ID: DevEui, 70:B3", 1000, (char*)"AT+ID=DevEui,\"70B3D57ED00616CB\"\r\n");
         //at_send_check_response((char*)"ID: AppEui, 12:34", 1000, (char*)"AT+ID=AppEui,\"1234567890ABCDEF\"\r\n");
 
         // Secondo sensore fatto in TTN
-        at_send_check_response((char*)"+KEY: APPKEY 3947", 1000, (char*)"AT+KEY=APPKEY,\"3947B8A55FBDE2B395C34E612B1BC45A\"\r\n");
+        at_send_check_response((char*)"+KEY: APPKEY 3947", 1000, (char*)"AT+KEY=APPKEY,\"3947B8A55FBDE2B395C34E612B1BC45 A\"\r\n");
         at_send_check_response((char*)"ID: DevEui, 70:B3", 1000, (char*)"AT+ID=DevEui,\"70B3D57ED00616F6\"\r\n");
         at_send_check_response((char*)"ID: AppEui, 12:34", 1000, (char*)"AT+ID=AppEui,\"1234567890ABCDEF\"\r\n");
 
