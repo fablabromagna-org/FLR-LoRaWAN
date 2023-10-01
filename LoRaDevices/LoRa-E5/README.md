@@ -31,3 +31,15 @@ Particolare sul fatto che il modulo è collegato sui GPIO 4 e 5
 I dati dalla seriale del Raspberry Pi Pico
 
 ![image](https://github.com/fablabromagna-org/FLR-LoRaWAN/assets/249618/a0abb570-a6c9-4f2d-a9ba-5c401d1b484b)
+
+Anche sul nostro server ChirpStack il sensore si comporta bene
+
+![image](https://github.com/fablabromagna-org/FLR-LoRaWAN/assets/249618/00c9b894-77ff-4829-b934-e42811c4cd0b)
+
+Anche sul nostro server si possono inviare dati verso il sensore
+
+![image](https://github.com/fablabromagna-org/FLR-LoRaWAN/assets/249618/a914829a-a11c-44e9-9d3f-0d3a296f5c63)
+
+Che arrivano allo spesso modo di TTN
+
+![image](https://github.com/fablabromagna-org/FLR-LoRaWAN/assets/249618/76b074f6-b0cf-407d-affb-43c462479fa6)
