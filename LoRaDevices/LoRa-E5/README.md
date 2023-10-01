@@ -32,7 +32,11 @@ I dati dalla seriale del Raspberry Pi Pico
 
 ![image](https://github.com/fablabromagna-org/FLR-LoRaWAN/assets/249618/a0abb570-a6c9-4f2d-a9ba-5c401d1b484b)
 
-Anche sul nostro server ChirpStack il sensore si comporta bene
+Questo è invece il nostro LoRa Network server ChirpStack che mostra il Gateway FLR posizionato a San Martino dei Mulini...
+
+![image](https://github.com/fablabromagna-org/FLR-LoRaWAN/assets/249618/cc4add61-9769-4f42-9e2c-5950dada1b3f)
+
+e anche su ChirpStack il sensore si comporta bene
 
 ![image](https://github.com/fablabromagna-org/FLR-LoRaWAN/assets/249618/00c9b894-77ff-4829-b934-e42811c4cd0b)
 
