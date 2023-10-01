@@ -40,6 +40,6 @@ Anche sul nostro server si possono inviare dati verso il sensore
 
 ![image](https://github.com/fablabromagna-org/FLR-LoRaWAN/assets/249618/a914829a-a11c-44e9-9d3f-0d3a296f5c63)
 
-Che arrivano allo spesso modo di TTN
+Che arrivano allo stesso modo di TTN
 
 ![image](https://github.com/fablabromagna-org/FLR-LoRaWAN/assets/249618/76b074f6-b0cf-407d-affb-43c462479fa6)
