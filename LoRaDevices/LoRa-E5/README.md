@@ -22,6 +22,12 @@ Esempio di Payload spedito all'End Device
 
 ![image](https://github.com/fablabromagna-org/FLR-LoRaWAN/assets/249618/ec2e3f80-5614-47fe-b3f8-3da0660f1f65)
 
+Lo schema elettrico
+![image](https://github.com/fablabromagna-org/FLR-LoRaWAN/assets/249618/4b705cdf-7c39-42c9-a603-334af2540f9b)
+
+Particolare sul fatto che il modulo è collegato sui GPIO 4 e 5 
+![image](https://github.com/fablabromagna-org/FLR-LoRaWAN/assets/249618/60265ebf-1c62-4518-9403-9d619087eed4)
+
 I dati dalla seriale del Raspberry Pi Pico
 
 ![image](https://github.com/fablabromagna-org/FLR-LoRaWAN/assets/249618/a0abb570-a6c9-4f2d-a9ba-5c401d1b484b)
