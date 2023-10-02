@@ -69,11 +69,11 @@ Per prima cosa impostare la password del gateway. Questa sarà la stessa usata a
 
 
 
-> __NOTA:__ MQTT Forwarder e USP Forwarder sono 2 metodi alternativi.
+> __NOTA:__ MQTT Forwarder e UDP Forwarder sono 2 metodi alternativi.
 >
-> Se si utilizza ChirpStack anche come NetworkServer allora la cosa migliore e' usare MQTT, in quanto i messaggi sul NS vengono tutti ricevuto dal broker MQTT.
+> Se si utilizza ChirpStack anche come NetworkServer allora la cosa migliore e' usare MQTT, in quanto i messaggi sul NS vengono tutti ricevuti dal broker MQTT.
 > 
-> Se si utilizza UDP verso un NS ChirpStack, i messaggi vengono comunque convertiti in MQTT sul server, ad opera del  **ChirpstackGatewayBridge**
+> Se si utilizza UDP verso un NS ChirpStack, i messaggi vengono comunque convertiti in MQTT sul server, ad opera del  **ChirpstackGatewayBridge**. Quindi usando MQTT tra GW e NS si salta un passaggio.
 >
 > UDP è utile quando si configura il GW su un NS TTN o per inoltrare i messaggi a più NS (nella configurazione di UDP Forwarder posso specificare più di un server; cosa che invece non posso fare con MQTT Forwarder
 
