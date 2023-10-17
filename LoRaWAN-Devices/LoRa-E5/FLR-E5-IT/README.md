@@ -30,6 +30,6 @@ inoltre sono stati rimossi tutti i riferimenti a TTN in quando i test sono stati
 
 > NOTE:
 > - utilizzando per ora un PICO W il BUILTIN_LED non sembra funzionare !
-> - il pacchetto inviato al NS è ora costituito da 5byte, con la temperatura inviata in decimi di gradi celsius
+> - il pacchetto inviato al NS è ora costituito da 6byte, con la temperatura inviata in decimi di gradi celsius
 > - ci sono alcune verifiche da completare per l'init del modulo e per la determinazione del tipo di messaggio inviato, che per ora è Confirmed
 
