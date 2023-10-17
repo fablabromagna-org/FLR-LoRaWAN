@@ -1,0 +1,498 @@
+[
+    {
+        "id": "5dfbf6ddcad8dec2",
+        "type": "tab",
+        "label": "LoRaWAN TTN Integration",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4e20aea429ae0a1f",
+        "type": "mqtt-broker",
+        "name": "TTN",
+        "broker": "eu1.cloud.thethings.network",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "89169fb258eb3216",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "cc2b4e5c47a344d4",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "e4f31cb3553490e4",
+        "type": "ui_group",
+        "name": "LoRaWAN Sensor FLR-IT1 - The Things Stack MQTT Integration",
+        "tab": "89169fb258eb3216",
+        "order": 1,
+        "disp": true,
+        "width": "13",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "698a47b268cc42a8",
+        "type": "mqtt in",
+        "z": "5dfbf6ddcad8dec2",
+        "name": "",
+        "topic": "v3/flr-demo-app1@ttn/devices/fca76b9eb3acf647/up",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "4e20aea429ae0a1f",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 370,
+        "y": 200,
+        "wires": [
+            [
+                "bb3e7a3dce2f699a"
+            ]
+        ]
+    },
+    {
+        "id": "1840da081887796a",
+        "type": "debug",
+        "z": "5dfbf6ddcad8dec2",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "be886ce3e387a227",
+        "type": "ui_gauge",
+        "z": "5dfbf6ddcad8dec2",
+        "name": "",
+        "group": "e4f31cb3553490e4",
+        "order": 1,
+        "width": "5",
+        "height": "4",
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "°C",
+        "format": "{{msg.payload.temp}}",
+        "min": 0,
+        "max": "45",
+        "colors": [
+            "#07acf2",
+            "#5ce600",
+            "#ca3838"
+        ],
+        "seg1": "18",
+        "seg2": "28",
+        "diff": false,
+        "className": "",
+        "x": 1170,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "bb3e7a3dce2f699a",
+        "type": "change",
+        "z": "5dfbf6ddcad8dec2",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.uplink_message.decoded_payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 240,
+        "wires": [
+            [
+                "be886ce3e387a227",
+                "00dd0550d66e293c",
+                "55333080b770c4ce",
+                "647c0248596ecbbc",
+                "999eeb5ee64b963a"
+            ]
+        ]
+    },
+    {
+        "id": "00dd0550d66e293c",
+        "type": "ui_gauge",
+        "z": "5dfbf6ddcad8dec2",
+        "name": "",
+        "group": "e4f31cb3553490e4",
+        "order": 2,
+        "width": "5",
+        "height": "4",
+        "gtype": "donut",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{msg.payload.humi}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#ffff0f",
+            "#1be600",
+            "#ffff0f"
+        ],
+        "seg1": "50",
+        "seg2": "70",
+        "diff": false,
+        "className": "",
+        "x": 1160,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "55333080b770c4ce",
+        "type": "ui_gauge",
+        "z": "5dfbf6ddcad8dec2",
+        "name": "",
+        "group": "e4f31cb3553490e4",
+        "order": 3,
+        "width": "3",
+        "height": "4",
+        "gtype": "wave",
+        "title": "Battery",
+        "label": "%",
+        "format": "{{msg.payload.battery}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1160,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "a6acfab26663394c",
+        "type": "ui_switch",
+        "z": "5dfbf6ddcad8dec2",
+        "name": "",
+        "label": "Device LED ON/OFF",
+        "tooltip": "",
+        "group": "e4f31cb3553490e4",
+        "order": 4,
+        "width": "5",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "led_value",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "num",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "num",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 300,
+        "y": 660,
+        "wires": [
+            [
+                "7346797f2c590121"
+            ]
+        ],
+        "icon": "node-red/light.svg"
+    },
+    {
+        "id": "7346797f2c590121",
+        "type": "function",
+        "z": "5dfbf6ddcad8dec2",
+        "name": "set_led_value",
+        "func": "\n// il valore di frm_payload deve essere un encoding base64\n// per ora ho messo i valori fissi corrispondenti ai valori hex 0 e 1, ottenuti con convertitore online\n// verificare funzioni javascript per ottenere i valori\n\nvar msgq = {payload : {\n  downlinks: [{\n    f_port: 8,\n    frm_payload: (msg.payload===1)?\"AQ==\":\"AA==\",\n    priority: \"NORMAL\"\n  }]\n}\n}\n\n\nreturn msgq\n\n\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 660,
+        "wires": [
+            [
+                "43288bdf48b0400b"
+            ]
+        ]
+    },
+    {
+        "id": "43288bdf48b0400b",
+        "type": "mqtt out",
+        "z": "5dfbf6ddcad8dec2",
+        "name": "set led",
+        "topic": "v3/flr-demo-app1@ttn/devices/fca76b9eb3acf647/down/push",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "4e20aea429ae0a1f",
+        "x": 790,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "a351b6df5baa7b6f",
+        "type": "mqtt in",
+        "z": "5dfbf6ddcad8dec2",
+        "name": "",
+        "topic": "v3/flr-demo-app1@ttn/devices/fca76b9eb3acf647/#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "4e20aea429ae0a1f",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 370,
+        "y": 100,
+        "wires": [
+            [
+                "1840da081887796a"
+            ]
+        ]
+    },
+    {
+        "id": "c95350370f5a4148",
+        "type": "ui_chart",
+        "z": "5dfbf6ddcad8dec2",
+        "name": "",
+        "group": "e4f31cb3553490e4",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "label": "Historical Data",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "monotone",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#b13dff",
+            "#ff7f0e",
+            "#ffbf0f",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1200,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "647c0248596ecbbc",
+        "type": "function",
+        "z": "5dfbf6ddcad8dec2",
+        "name": "build_chart_series",
+        "func": "var msg_temp = {};\nvar msg_humi = {};\nvar msg_bat = {};\nvar msg_led = {};\n\n\nmsg_temp.topic = 'Temperature °C'\nmsg_temp.payload = msg.payload.temp\n\n\nmsg_humi.topic = 'Humidity %'\nmsg_humi.payload = msg.payload.humi\n\n\nmsg_bat.topic = 'Battery %'\nmsg_bat.payload = msg.payload.battery\n\nmsg_led.topic = 'LED Status'\nmsg_led.payload = msg.payload.led_status*10  // per poter vedere sul grafico qualcosa moltiplico per 10\n\nreturn [msg_temp, msg_humi, msg_bat, msg_led]",
+        "outputs": 4,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 460,
+        "wires": [
+            [
+                "c95350370f5a4148"
+            ],
+            [
+                "c95350370f5a4148"
+            ],
+            [
+                "c95350370f5a4148"
+            ],
+            [
+                "c95350370f5a4148"
+            ]
+        ]
+    },
+    {
+        "id": "999eeb5ee64b963a",
+        "type": "ui_template",
+        "z": "5dfbf6ddcad8dec2",
+        "group": "e4f31cb3553490e4",
+        "name": "led status",
+        "order": 5,
+        "width": "5",
+        "height": "1",
+        "format": "<div layout=\"row\" layout-align=\"space-between\">\n    <p>The LED Status is </p>\n    <font color=\"{{(msg.payload.led_status === 1) ? 'green' : 'grey'}}\">\n        {{(msg.payload.led_status === 1) ? 'ON' : 'OFF'}}\n    </font>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1160,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    }
+]
