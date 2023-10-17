@@ -14,9 +14,14 @@ https://wiki.seeedstudio.com/Grove_Wio_E5_TTN_Demo/
 
 ## Note di revisione
 
+### versione 1.1
+
+Aggiunto nel payload inviato al NS un ulteriore byte che rappresenta lo stato del led verde, che è possibile comandare da remoto tramite comando di downlink.  In questo modo è possibile vedere se il comando è andato a buon fine, e tracciare comunque lo stato di accensione.
+Da notare che, essendo il comando ricevuto dal device solo dopo aver trasmesso i propri dati (DEVICE A), viene applicato subito ma lo stato del led viene notificato solo al successivo invio
+
 ### versione 1.0
 
-Rispetto ai sorgeti di Maurizio sono state apportate le seguenti modifiche:
+Rispetto ai sorgenti di Maurizio sono state apportate le seguenti modifiche:
 
 - utilizzo di 2 led esterni su grove (verde-D16 / blu-D18)
 - utilizzo di un sensore grove di temperatura su A0 (poco preciso, ma per i test iniziali va bene)
