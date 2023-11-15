@@ -1,4 +1,4 @@
-/* LoRaWAN-L5-Device v1.1
+/* LoRaWAN-L5-Device v1.2
  *
  * Test di connessione dispositivo LoRaWAN usando un modulo Seeed LoRa-E5-HF
  * testato su Raspberry Pi Pico
@@ -14,6 +14,7 @@
  *
  * Rispetto ai sorgeti di Maurizio sono state apportate le seguenti modifiche:
  *
+ * - aggiunto gestione display oled
  * - utilizzo di 2 led esterni su grove (verde-D16 / blu-D18)
  * - utilizzo di un sensore grove di temperatura su A0 (poco preciso, ma per i test iniziali va bene)
  * - utilizzo di un potenziometro grove per simulare il valore di umidità %
@@ -31,6 +32,15 @@
  */
 
 #include <Arduino.h>
+#include <Adafruit_SSD1306.h>
+
+
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+#define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
+#define SCREEN_ADDRESS 0x3C ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
 
 // Se togli questo commento, si attivano delle Serial.print
 // in giro per il programma che aiutano a capirci qualcosa in più
@@ -167,11 +177,30 @@ static void recv_parse(char* p_msg)
     p_start = strstr(p_msg, "SNR");
     if (p_start && (1 == sscanf(p_start, "SNR %d", &snr)))
         Serial.println("snr: " + String(snr));
+
+
+    char signal_str[130];
+    sprintf(signal_str, "RSSI:%d  SNR:%d", rssi, snr );
+
+
+    display.clearDisplay();                                                      
+    display.setTextSize(1);
+    display.cp437(true);         // Use full 256 char 'Code Page 437' font
+
+    display.setCursor(0,0);             // Start at top-left corner
+    display.println(F("LoRaWAN FLR-IT1"));
+
+    display.setCursor(0, 9);     // Start at top-left corner
+    display.println(signal_str);
+    display.display();
+
 }
 
 void initialize_LoRaModule()
 {
     Serial.println("Inizio config Modulo...");
+
+
 
     if (at_send_check_response((char*)"+AT: OK", 300, (char*)"AT\r\n")) {
         is_exist = true;
@@ -211,6 +240,14 @@ void setup(void)
     Serial.begin(115200);
     Serial.print("FabLab Romagna E5 LORAWAN TEST - FLR Sensor IT1\r\n");
 
+    // Il connettore I2C0 del Groove e' collegato ai pin 11 e 12 del pico, corrispondenti a GP8 e GP9
+    Wire.setSDA(8);
+    Wire.setSCL(9);
+    // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
+    if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
+      Serial.println(F("SSD1306 allocation failed"));
+    }
+
     // UART1 (Serial2) è collegata al nostro modulo sui PIN 4 e 5
     Serial2.setTX(4);
     Serial2.setRX(5);
@@ -225,6 +262,16 @@ void setup(void)
     digitalWrite(D25, HIGH);
     digitalWrite(pinGreenLed, HIGH);
     // digitalWrite(pinBlueLed, HIGH);
+
+
+    display.clearDisplay();
+    display.setTextSize(1);
+    display.cp437(true);     
+    display.setTextColor(SSD1306_WHITE);        // Draw white text
+    display.setCursor(0,0);             // Start at top-left corner
+    display.println(F("LoRaWAN FLR-IT1"));
+    display.display();
+
 }
 
 void loop(void)
