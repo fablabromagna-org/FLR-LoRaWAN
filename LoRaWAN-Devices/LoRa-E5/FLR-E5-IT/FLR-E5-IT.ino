@@ -66,15 +66,36 @@ const long lorawan_interval = 10000;  // interval to send lorawan packets (milli
 #define PIN_TEMP_SENSOR A0  // Grove - Temperature Sensor connected to A0
 #define PIN_HUMI_SENSOR A1  // Grove - Humidity Sensor connected to A1
 #define PIN_GREEN_LED D16   // Grove - green led connected to D16
-#define PIN_BLUE_LED D18   // Grove - green blue connected to D18
+#define PIN_BLUE_LED D20   // Grove - green blue connected to D18
 
-#define BUTTON_PIN 20
+#define BUTTON_PIN D18
 
 EasyButton button(BUTTON_PIN);
+
+
+// LNS: 0=TTN / 1=CS
+int g_lns_destination = 0;
+int g_rssi = 0;
+int g_snr = 0;
+int g_temp = 0;
+int g_humi = 0;
+int g_battery = 0;
+int g_led = 0;
+int g_display_page = 1;
+
+#define DISPLAY_PAGE_MAX  2
 
 // Button Callback.
 void onPressed() {
     Serial.println("Button has been pressed!");
+      g_display_page ++;
+    if (g_display_page > DISPLAY_PAGE_MAX) 
+      g_display_page = 1;
+
+
+    Serial.println(g_display_page);
+    
+
 }
 
 void onPressedForDuration() {
@@ -95,6 +116,82 @@ const int R0 = 100000; // R0 = 100k
 // const int pinBlueLed = D18; // Grove -  blur led connected to D18
 
 int led_status = LOW;
+
+
+
+typedef enum LoraStatus {
+  initial = 0,
+  configuring=5,
+  configure_ok=6,
+  joining=10,
+  joined=11,
+  sending=20,
+  send_ok=21,
+  error_init=100,
+  error_join=110,
+  error_send=120,
+}LoraStatus;
+
+
+LoraStatus lora_status;
+
+
+void display_refresh() {
+  //TODO: ottimizzare refresh e aggiornamento selettivo
+  #ifdef USE_TFT_DISPLAY
+    display.clearDisplay();
+    display.setTextSize(1);
+    display.cp437(true);     
+    display.setTextColor(SSD1306_WHITE);        // Draw white text
+    display.setCursor(0,0);             // Start at top-left corner
+    display.print(F("LoRaWAN FLR-IT1"));
+
+    if (g_lns_destination == 0) {
+      display.println(F(" - TTN"));
+    }
+    else {
+      display.println(F(" - CS"));
+    }
+
+    display.setCursor(0, 8);     
+    if (lora_status == LoraStatus::initial) display.println(" ...");
+    else if (lora_status == LoraStatus::configuring) display.println("configuring");
+    else if (lora_status == LoraStatus::configure_ok) display.println("configure_ok");
+    else if (lora_status == LoraStatus::joining) display.println("joining");
+    else if (lora_status == LoraStatus::joined) display.println("joined");
+    else if (lora_status == LoraStatus::sending) display.println("sending data");
+    else if (lora_status == LoraStatus::send_ok) display.println("sent data OK");
+    else if (lora_status == LoraStatus::error_init) display.println("ERROR INIT");
+    else if (lora_status == LoraStatus::error_join) display.println("ERROR JOIN");
+    else if (lora_status == LoraStatus::error_send) display.println("ERROR SEND");
+    else display.println("???");
+    
+    display.setTextSize(2);
+
+    if (g_display_page == 1) {
+      if (g_rssi != 0) {
+        display.setCursor(0, 20);     
+        display.print("RSSI:"); display.println(g_rssi);
+        display.print("SNR:"); display.println(g_snr);
+      }
+    }
+    else if (g_display_page == 2) {
+        display.setCursor(0, 20);     
+        display.println("T  H   B"); 
+        
+        display.print((int)g_temp/10); display.print(" ");//display.print("C ");
+
+        display.print(g_humi); display.print("% ");
+
+        display.print(g_battery); display.println("%");
+    }
+
+
+    display.display();
+
+  #endif
+}
+
 
 static int at_send_check_response(char* p_ack, int timeout_ms, char* p_cmd, ...)
 {
@@ -203,38 +300,29 @@ static void recv_parse(char* p_msg)
 
     // qui decodifichiamo RSSI (potenza del segnale)
     p_start = strstr(p_msg, "RSSI");
-    if (p_start && (1 == sscanf(p_start, "RSSI %d,", &rssi)))
+    if (p_start && (1 == sscanf(p_start, "RSSI %d,", &rssi))) {
         Serial.println("rssi: " + String(rssi));
+        g_rssi = rssi;
+    }
+
 
     // qui decodifichiamo SNR (rapporto segnale/rumore)
     p_start = strstr(p_msg, "SNR");
-    if (p_start && (1 == sscanf(p_start, "SNR %d", &snr)))
-        Serial.println("snr: " + String(snr));
+    if (p_start && (1 == sscanf(p_start, "SNR %d", &snr))){
+       Serial.println("snr: " + String(snr));
+       g_snr = snr;
+    }
 
 
+    display_refresh();
 
-#ifdef USE_TFT_DISPLAY
-
-    char signal_str[130];
-    sprintf(signal_str, "RSSI:%d  SNR:%d", rssi, snr );
-
-
-    display.clearDisplay();                                                      
-    display.setTextSize(1);
-    display.cp437(true);         // Use full 256 char 'Code Page 437' font
-
-    display.setCursor(0,0);             // Start at top-left corner
-    display.println(F("LoRaWAN FLR-IT1"));
-
-    display.setCursor(0, 9);     // Start at top-left corner
-    display.println(signal_str);
-    display.display();
-#endif
 
 }
 
 void initialize_LoRaModule(int lns_destination)
 {
+    lora_status = LoraStatus::configuring;
+    g_lns_destination = lns_destination;
     Serial.print("Inizio config Modulo per NetworkServer:");
     if (lns_destination == 0) {
       Serial.println(" TTN");
@@ -242,19 +330,6 @@ void initialize_LoRaModule(int lns_destination)
     else {
       Serial.println(" ChirpStack");
     }
-
-#ifdef USE_TFT_DISPLAY
-    display.clearDisplay();                                                      
-    display.setCursor(0,0);             // Start at top-left corner
-    display.print(F("LoRaWAN FLR-IT1"));
-    if (lns_destination == 0) {
-      display.println(F(" - TTN"));
-    }
-    else {
-      display.println(F(" - CS"));
-    }
-    display.display();
-#endif
 
     if (at_send_check_response((char*)"+AT: OK", 300, (char*)"AT\r\n")) {
         is_exist = true;
@@ -284,8 +359,10 @@ void initialize_LoRaModule(int lns_destination)
         // Questo non sembra essere necessario (quantomeno con TTN -> indagare meglio)
         // at_send_check_response((char*)"ID: AppEui, 7B:9A", 1000, (char*)"AT+ID=AppEui,\"7b9a65aa20e645319b1298c03a31bc3b\"\r\n");
 
+        lora_status = LoraStatus::configure_ok;
         delay(200);
     } else {
+        lora_status = LoraStatus::error_init;
         is_exist = false;
         Serial.print("No E5 module found.\r\n");
         delay(10000);
@@ -294,6 +371,8 @@ void initialize_LoRaModule(int lns_destination)
 
 void setup(void)
 {
+
+    lora_status = LoraStatus::initial;
 
     // Dammi il tempo di accendere il monito seriale...
     delay(3000);
@@ -324,17 +403,14 @@ void setup(void)
       Serial.println(F("SSD1306 allocation failed"));
     }
 
-    display.clearDisplay();
-    display.setTextSize(1);
-    display.cp437(true);     
-    display.setTextColor(SSD1306_WHITE);        // Draw white text
-    display.setCursor(0,0);             // Start at top-left corner
-    display.println(F("LoRaWAN FLR-IT1"));
-    display.display();
+    display_refresh();
 #endif
 
     pinMode(BUTTON_PIN, INPUT);
     int btnValue = digitalRead(BUTTON_PIN);
+
+    lora_status = LoraStatus::configuring;
+    display_refresh();
 
     initialize_LoRaModule(btnValue);
 
@@ -345,7 +421,7 @@ void setup(void)
     // Attach callback.
     button.onPressed(onPressed);
     // Attach callback for 2sec pression
-    button.onPressedFor(2000, onPressedForDuration);
+    // button.onPressedFor(2000, onPressedForDuration);
 
     // digitalWrite(D25, HIGH);
     digitalWrite(PIN_GREEN_LED, HIGH);
@@ -356,6 +432,7 @@ unsigned long previousMillis = 0;  // will store last time lorawan message is se
 
 void loop(void)
 {
+  static int cnt_refresh1 = 0;
 
     button.read();
 
@@ -368,23 +445,30 @@ void loop(void)
 
     uint8_t battery = map(random(10), 0, 10, 30, 100);
 
+    g_temp = (int)(temp*10);
+    g_humi = (int)humi;
+    g_battery = battery;
+
+
     int ok = 0;
 
     if (is_exist) {
         unsigned long currentMillis = millis();
         if (currentMillis - previousMillis >= lorawan_interval) {
-          // save the last time you blinked the LED
-          previousMillis = currentMillis;
 
           if (!is_join) {
               Serial.println("Modulo configurato.");
               Serial.println("Tento un JOIN...");
+              lora_status = LoraStatus::joining;
+              display_refresh();
               ok = at_send_check_response((char*)"+JOIN: Network joined", 12000, (char*)"AT+JOIN\r\n");
               if (ok) {
+                  lora_status = LoraStatus::joined;
                   digitalWrite(PIN_GREEN_LED, LOW);
                   is_join = true;
                   Serial.println("JOIN riuscito.");
               } else {
+                  lora_status = LoraStatus::error_join;
                   digitalWrite(PIN_GREEN_LED, HIGH);
                   is_join = false;
                   Serial.println("...JOIN non riuscito!\r\n");
@@ -392,6 +476,8 @@ void loop(void)
               }
           } 
           
+          display_refresh();
+
           if (is_join) {
               digitalWrite(PIN_BLUE_LED, HIGH);
               Serial.println("Spedisco i dati...");
@@ -401,22 +487,41 @@ void loop(void)
               char cmd[128];
               sprintf(cmd, "AT+CMSGHEX=\"%04X%04X%02X%02X\"\r\n", (int)(temp * 10), (int)humi, battery, led_status);
 
+              lora_status = LoraStatus::sending;
+              display_refresh();
               ok = at_send_check_response((char*)"+CMSGHEX: Done", 12000, cmd);
               if (ok) {
+                  lora_status = LoraStatus::send_ok;
                   Serial.println("\nRicevo dal server");
                   recv_parse(recv_buf);
                   Serial.println("");
-              } else
-                  Serial.print("Spedizione del messaggio fallita...\r\n\r\n");
-
+              } else{
+                g_rssi = 0;
+                lora_status = LoraStatus::error_send;
+                Serial.print("Spedizione del messaggio fallita...\r\n\r\n");
+              }
+              display_refresh();
               digitalWrite(PIN_BLUE_LED, LOW);
 
-              delay(100);
+              
           }
+          // save the last time you sent data
+          previousMillis = millis();
+
         }
 
     } else {
+        lora_status = LoraStatus::error_init;
+        display_refresh();
         Serial.println("LoRa-E5 not found...");
         delay(1000);
     }
+
+    button.read();    
+    cnt_refresh1++;
+    if (cnt_refresh1 > 50) {  
+      display_refresh();
+      cnt_refresh1 = 1;
+    }
+    delay(10);
 }
