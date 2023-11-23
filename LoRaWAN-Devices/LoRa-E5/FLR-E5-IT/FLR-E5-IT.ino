@@ -171,8 +171,8 @@ void display_refresh() {
     if (g_display_page == 1) {
       if (g_rssi != 0) {
         display.setCursor(0, 20);     
-        display.print("RSSI:"); display.println(g_rssi);
-        display.print("SNR:"); display.println(g_snr);
+        display.print("RSSI: "); display.println(g_rssi);
+        display.print("SNR: "); display.println(g_snr);
       }
     }
     else if (g_display_page == 2) {
