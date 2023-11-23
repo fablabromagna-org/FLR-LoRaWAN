@@ -14,6 +14,13 @@ https://wiki.seeedstudio.com/Grove_Wio_E5_TTN_Demo/
 
 ## Note di revisione
 
+### versione 1.2
+
+- gestione di un pulsante per selezionare all'avvio il LNS a cui inviare i dati (ovvero per selezionare un differente ID del dispositivo che è registrato in maniera differente su TTN e ChirpStack)
+- visualizzazione dello stato sul display OLED
+- visualizzazione su OLED della potenza segnale (RSSI/SNR) o dei dati (Temp/Humi/Batt). Pagina display selezionabile dal pulsante.
+
+
 ### versione 1.1
 
 Aggiunto nel payload inviato al NS un ulteriore byte che rappresenta lo stato del led verde, che è possibile comandare da remoto tramite comando di downlink.  In questo modo è possibile vedere se il comando è andato a buon fine, e tracciare comunque lo stato di accensione.
@@ -38,3 +45,10 @@ inoltre sono stati rimossi tutti i riferimenti a TTN in quando i test sono stati
 > - il pacchetto inviato al NS è ora costituito da 6byte, con la temperatura inviata in decimi di gradi celsius
 > - ci sono alcune verifiche da completare per l'init del modulo e per la determinazione del tipo di messaggio inviato, che per ora è Confirmed
 
+
+
+## TODO:
+
+- verificare il motivo del fallimento del primo JOIN
+- ottimizzare invio comandi AT in modo da non bloccare il ciclo loop (ricezione risposta asincrona)
+- Ottimizzare la visualizzazione sul display
